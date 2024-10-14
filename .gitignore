@@ -1,3 +1,9 @@
 # Ignore Python compiled files
 __pycache__/
 *.pyc
+
+# Ignore all logs drectories
+logs
+
+# Ignore all daily_prograss
+daily_progress
