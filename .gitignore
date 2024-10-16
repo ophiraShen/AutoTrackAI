@@ -7,3 +7,8 @@ logs
 
 # Ignore all daily_prograss
 daily_progress
+
+# Ignore .DS_Store
+.DS_Store
+
+.gradio

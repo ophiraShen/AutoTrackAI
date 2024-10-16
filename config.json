@@ -1,8 +1,7 @@
 {
-    "github_token": "g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",
-    "openai_api_key": "str",
+    "github_token": "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",
     "notification_settings": {
-        "email": "sfgcs089@163.com",
+        "email": "your_email@example.com",
         "slack_webhook_url": "your_slack_webhook_url"
     },
     "subscriptions_file": "subscriptions.json",
