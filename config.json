@@ -1,9 +1,15 @@
+
 {
-    "github_token": "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",
-    "notification_settings": {
-        "email": "sfgcs089@163.com",
-        "slack_webhook_url": "your_slack_webhook_url"
+    "github_token": "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",
+    "email":  {
+        "smtp_server": "smtp.163.com",
+        "smtp_port": 465,
+        "from": "19526036295@163.com",
+        "password": "SV5e8urfnX3Ta8SB",
+        "to": "sfgcs089@163.com"
     },
+    "slack_webhook_url": "your_slack_webhook_url",
     "subscriptions_file": "subscriptions.json",
-    "update_interval": 86400
+    "github_progress_frequency_days": 1,
+    "github_progress_execution_time":"09:00"
 }

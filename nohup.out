@@ -1,0 +1,12 @@
+daemon_control.sh: line 64: syntax error near unexpected token `)'
+daemon_control.sh: line 64: `    *)'
+daemon_control.sh: line 64: syntax error near unexpected token `)'
+daemon_control.sh: line 64: `    *)'
+Starting DaemonProcess...
+daemon_control.sh: line 19: ./run/DaemonProcess.pid: No such file or directory
+DaemonProcess started.
+Starting DaemonProcess...
+DaemonProcess started
+
+Starting DaemonProcess...
+DaemonProcess started.
