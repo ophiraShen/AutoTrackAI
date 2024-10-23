@@ -33,7 +33,7 @@ class LLM:
         # 配置日志文件，当文件大小达到1MB时自动轮转，日志级别为DEBUG
         LOG.add("logs/llm_logs.log", rotation="1 MB", level="DEBUG")
 
-    def generate_daily_report(self, markdown_content, dry_run=False):
+    def generate_report(self, markdown_content, dry_run=False):
         """
         生成每日报告，根据配置选择不同的模型来处理请求。
         

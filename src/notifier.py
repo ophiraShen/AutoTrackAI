@@ -12,7 +12,7 @@ class Notifier:
         if self.email_settings:
             self.send_email(repo, report)
         else:
-            LOG.info("邮件设置未配置正确，无法发送通知")
+            LOG.warning("邮件设置未配置正确，无法发送通知")
     
     def send_email(self, repo, report):
         LOG.info(f"开始发送邮件通知")

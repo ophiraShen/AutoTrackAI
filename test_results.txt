@@ -1,0 +1,13 @@
+2024-10-23 23:57:53 | INFO | github_client:export_daily_progress:70 - Exported daily progress to daily_progress/DjangoPeng_openai-quickstart/2024-10-23.md
+2024-10-23 23:57:53 | INFO | github_client:export_progress_by_date_range:92 - Exported time-range progress to daily_progress/DjangoPeng_openai-quickstart/2024-10-16_to_2024-10-23.md
+2024-10-23 23:57:53 | INFO | llm:generate_report:53 - Dry run mode enabled. Saving prompt to file.
+2024-10-23 23:57:53 | DEBUG | llm:generate_report:57 - Prompt saved to daily_progress/prompt.txt
+2024-10-23 23:57:53 | INFO | llm:generate_report:53 - Dry run mode enabled. Saving prompt to file.
+2024-10-23 23:57:53 | DEBUG | llm:generate_report:57 - Prompt saved to daily_progress/prompt.txt
+2024-10-23 23:57:53 | INFO | llm:generate_report:53 - Dry run mode enabled. Saving prompt to file.
+2024-10-23 23:57:53 | DEBUG | llm:generate_report:57 - Prompt saved to daily_progress/prompt.txt
+2024-10-23 23:57:53 | WARNING | notifier:notify:15 - 邮件设置未配置正确，无法发送通知
+2024-10-23 23:57:53 | INFO | notifier:send_email:18 - 开始发送邮件通知
+2024-10-23 23:57:54 | INFO | notifier:send_email:31 - 邮件发送成功
+2024-10-23 23:57:54 | INFO | test_notifier:test_send_email_success:70 - 邮件发送成功
+2024-10-23 23:57:54 | INFO | report_generator:generate_daily_report:22 - GitHub 项目报告已保存到 test_daily_progress_report.md
