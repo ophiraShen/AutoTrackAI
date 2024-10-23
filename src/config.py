@@ -25,4 +25,13 @@ class Config:
             # 默认每天执行
             self.freq_days = config.get('github_progress_frequency_days', 1)
             # 默认早上8点更新 (操作系统默认时区是 UTC +0，08点刚好对应北京时间凌晨12点)
-            self.exec_time = config.get('github_progress_execution_time', "08:00") 
+            self.exec_time = config.get('github_progress_execution_time', "08:00")
+
+            # 初始化LLM设置
+            llm_config = config.get('llm', {})
+            self.llm_model_type = llm_config.get('model_type', 'deepseek')
+            self.openai_model_name = llm_config.get('openai_model_name', 'gpt-4o-mini')
+            self.ollama_model_name = llm_config.get('ollama_model_name', 'llama3.1')
+            self.deepseek_model_name = llm_config.get('deepseek_model_name', 'deepseek-chat')
+            self.ollama_api_url = llm_config.get('ollama_api_url', 'http://localhost:11434/api/chat')
+            self.deepseek_api_url = llm_config.get('deepseek_api_url', 'https://api.deepseek.com')
