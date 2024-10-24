@@ -13,7 +13,7 @@ class ReportGenerator:
         with open(markdown_file_path, 'r') as file:
             markdown_content = file.read()
 
-        report = self.llm.generate_report(report_type, markdown_content)  # 调用LLM生成报告
+        report = self.llm.generate_report(markdown_content)  # 调用LLM生成报告
 
         report_file_path = os.path.splitext(markdown_file_path)[0] + "_report.md"
         with open(report_file_path, 'w+') as report_file:

@@ -3,7 +3,11 @@ import os
 
 class Config:
     def __init__(self):
-        self.load_config()
+        try:
+            self.load_config()
+        except Exception as e:
+            print(f"配置加载失败: {str(e)}")  # 或使用日志记录
+            raise  # 重新抛出异常以便在主程序中捕获
     
     def load_config(self):
         # 从环境变量获取GitHub Token
@@ -35,3 +39,11 @@ class Config:
             self.deepseek_model_name = llm_config.get('deepseek_model_name', 'deepseek-chat')
             self.ollama_api_url = llm_config.get('ollama_api_url', 'http://localhost:11434/api/chat')
             self.deepseek_api_url = llm_config.get('deepseek_api_url', 'https://api.deepseek.com')
+
+if __name__ == "__main__":
+    config = Config()
+    print(config.github_token)
+    print(config.email)
+    print(config.subscriptions_file)
+    print(config.freq_days)
+    print(config.exec_time)
