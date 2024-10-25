@@ -16,7 +16,9 @@
         "model_type": "ollama",
         "openai_model_name": "gpt-4o-mini",
         "ollama_model_name": "llama3.1",
-        "ollama_api_url": "http://localhost:11434/api/chat"
+        "deepseek_model_name": "deepseek-chat",
+        "ollama_api_url": "http://localhost:11434/api/chat",
+        "deepseek_api_url": "https://api.deepseek.com"
     },
     "report_types": [
         "github",
