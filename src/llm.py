@@ -33,7 +33,7 @@ class LLM:
         # 配置日志文件，当文件大小达到1MB时自动轮转，日志级别为DEBUG
         LOG.add("logs/llm_logs.log", rotation="1 MB", level="DEBUG")
 
-    def generate_report(self, markdown_content, dry_run=False):
+    def generate_report(self, system_prompt, user_content, dry_run=False):
         """
         生成每日报告，根据配置选择不同的模型来处理请求。
         
@@ -44,8 +44,8 @@ class LLM:
         
         # 使用从TXT文件加载的提示信息
         messages = [
-            {"role": "system", "content": self.system_prompt},
-            {"role": "user", "content": markdown_content},
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content},
         ]
 
         if dry_run:
@@ -95,6 +95,9 @@ class LLM:
             response = self.client.chat.completions.create(
                 model=self.config.deepseek_model_name,
                 messages=messages,
+                max_tokens=4096,
+                temperature=0.7,
+                stream=False,
             )
             LOG.debug("DeepSeek 响应: {}", response)
             return response.choices[0].message.content
@@ -111,6 +114,9 @@ class LLM:
             palyload = {
                 "model": self.config.ollama_model_name,
                 "messages": messages,
+                "stream": False,
+                "max_tokens": 4096,
+                "temperature": 0.7,
                 "stream": False,
             }
             response = requests.post(self.api_url, json=palyload)

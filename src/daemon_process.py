@@ -1,10 +1,13 @@
+import os
 import schedule # 导入 schedule 实现定时任务执行器
 import time  # 导入time库，用于控制时间间隔
+from datetime import datetime
 import signal  # 导入signal库，用于信号处理
 import sys  # 导入sys库，用于执行系统相关的操作
 
 from config import Config  # 导入配置管理类
 from github_client import GitHubClient  # 导入GitHub客户端类，处理GitHub API请求
+from hacker_news_client import HackerNewsClient  # 导入Hacker News客户端类，处理Hacker News API请求
 from notifier import Notifier  # 导入通知器类，用于发送通知
 from report_generator import ReportGenerator  # 导入报告生成器类
 from llm import LLM  # 导入语言模型类，可能用于生成报告内容
@@ -29,6 +32,21 @@ def github_job(subscription_manager, github_client, report_generator, notifier, 
         notifier.notify(repo, report)
     LOG.info(f"[定时任务执行完毕]")
 
+def hn_topic_job(hacker_news_client, report_generator):
+    LOG.info("[开始执行定时任务]Hacker News 热点话题")
+    markdown_file_path = hacker_news_client.export_top_stories()
+    _, _ = report_generator.generate_hn_topic_report(markdown_file_path)
+    LOG.info(f"[定时任务执行完毕]Hacker News 热点话题")
+
+def hn_daily_job(hacker_news_client, report_generator, notifier):
+    LOG.info("[开始执行定时任务]Hacker News 今日技术前沿趋势")
+    # 获取当前日期，并格式话为 YYYY-MM-DD 格式
+    date = datetime.now().strftime('%Y-%m-%d')
+    directory_path = os.path.join('hacker_news', date)
+    report, _ = report_generator.generate_hn_daily_report(directory_path)
+    notifier.notify_hn_report(date, report)
+    LOG.info(f"[定时任务执行完毕]Hacker News 今日技术前沿趋势")
+
 
 def main():
     # 设置信号处理器
@@ -36,18 +54,26 @@ def main():
 
     config = Config()  # 创建配置实例
     github_client = GitHubClient(config.github_token)  # 创建GitHub客户端实例
+    hacker_news_client = HackerNewsClient()  # 创建Hacker News客户端实例
     notifier = Notifier(config.email)  # 创建通知器实例
     llm = LLM(config)  # 创建语言模型实例
-    report_generator = ReportGenerator(llm)  # 创建报告生成器实例
+    report_generator = ReportGenerator(llm, config.report_types)  # 创建报告生成器实例
     subscription_manager = SubscriptionManager(config.subscriptions_file)  # 创建订阅管理器实例
 
     # # 启动时立即执行（如不需要可注释）
     # github_job(subscription_manager, github_client, report_generator, notifier, config.freq_days)
+    hn_daily_job(hacker_news_client, report_generator, notifier)
 
-    # 安排每天的定时任务
+    # 安排 GitHub 仓库进展报告的定时任务
     schedule.every(config.freq_days).days.at(
         config.exec_time
     ).do(github_job, subscription_manager, github_client, report_generator, notifier, config.freq_days)
+
+    # 安排 Hacker News 热点话题的定时任务，每 4 小时执行一次，从0点开始
+    schedule.every(4).hours.at(":00").do(hn_topic_job, hacker_news_client, report_generator)
+
+    # 安排 Hacker News 今日技术前沿趋势的定时任务，每天 10:00 执行
+    schedule.every().day.at("10:00").do(hn_daily_job, hacker_news_client, report_generator, notifier)
 
     try:
         # 在守护进程中持续运行
