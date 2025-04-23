@@ -102,4 +102,4 @@ with gr.Blocks() as demo:
 
         button.click(fn=generate_hn_hour_topic, inputs=[model_type, model_name], outputs=[markdown_output, file_output])
 
-demo.launch()
+demo.launch(server_port=7860, share=True)
